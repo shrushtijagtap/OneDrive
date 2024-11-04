@@ -1,3 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
-# Create your models here.
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    password_last_changed = models.DateTimeField(default=timezone.now)

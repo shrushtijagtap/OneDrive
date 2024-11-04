@@ -3,19 +3,22 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .forms import CustomUserCreationForm
+from django.utils import timezone
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-            return redirect('login')
+            user = form.save(commit=False)
+            user.password_last_changed = timezone.now()
+            user.save()
+            login(request, user)
+            return redirect('home') 
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
 
 def login_user(request):
     if request.method == 'POST':
@@ -38,3 +41,7 @@ def home(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')

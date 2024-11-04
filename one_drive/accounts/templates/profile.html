@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profilestyle.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Your Profile</h1>
+        <p><strong>First Name:</strong> {{ user.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+        <p><strong>Password Last Changed:</strong> {{ user.password_last_changed }}</p>
+        
+        <!-- Button to go back to the home page -->
+        <a href="{% url 'home' %}" class="home-button">Go Back to Home Page</a>
+    </div>
+</body>
+</html>
